@@ -1,0 +1,146 @@
+#div1 {
+  width: 800px;
+  height: 800px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+}
+
+.canvas {
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+}
+
+.Geo {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.Geo #map {
+  width: 500px;
+  height: 500px;
+  border: 1px solid #ccc;
+}
+.css_new .div1 {
+  width: 100px;
+  height: 20px;
+  border: 1px solid #f00;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 20px;
+}
+.css_new .div2 {
+  width: 100px;
+  height: 20px;
+  border: 1px solid #f0f;
+  background-color: #f0f;
+  margin-top: 10px;
+  text-align: center;
+  line-height: 20px;
+  box-shadow: 10px 10px 5px #888;
+}
+.css_bg {
+  /* 在url后面添加逗号可添加多重背景 */
+  background: url("../项目/1.png");
+  background-size: 500px 500px;
+  background-repeat: no-repeat;
+}
+.css_text h2 {
+  text-shadow: 2px 4px 3px #f00;
+}
+.css_text p {
+  width: 11em;
+  border: 1px solid #f00;
+  word-wrap: break-word;
+}
+
+.trans {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+.trans #trans_div {
+  width: 200px;
+  height: 200px;
+  background-color: #f00;
+  color: #fff;
+  line-height: 200px;
+  text-align: center;
+
+  transform: rotate(30deg);
+  -webkit-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -moz-transform: rotate(30deg);
+  -o-transform: rotate(30deg);
+
+  /* transform: translate(50px, 100px) matrix(1, 2, 3, 4, 5, 6) skew(30deg, 30deg)
+    scale(0.5, 0.5) rotate(30deg); */
+}
+.trans_3D {
+  width: 200px;
+  height: 150px;
+  background-color: yellow;
+  border: 1px solid black;
+  margin: 100px auto;
+
+  transform: rotateX(150deg) rotateY(100deg);
+}
+.trans_tion {
+  width: 100px;
+  height: 100px;
+  background-color: tomato;
+  transition: width 3s, height 2s, transform 2s;
+}
+.trans_tion:hover {
+  width: 400px;
+  height: 200px;
+  transform: rotate(30deg);
+}
+
+.animate {
+  width: 300px;
+  height: 300px;
+  background-color: blue;
+  position: relative;
+  animation: myfirstAnimate 10s;
+  -webkit-animation: myfirstAnimate 10s;
+}
+@keyframes myfirstAnimate {
+  0% {
+    background: red;
+    color: white;
+    left: 0px;
+    top: 0px;
+  }
+  25% {
+    background: yellow;
+    color: blue;
+    left: 0px;
+    top: 0px;
+  }
+  50% {
+    left: 100px;
+    top: 0px;
+  }
+  75% {
+    background-color: aqua;
+    color: antiquewhite;
+    top: 200px;
+    left: 200px;
+    transform: rotate(30deg);
+  }
+  100% {
+    background-color: blue;
+    color: white;
+    top: 0px;
+    left: 0px;
+  }
+}
+.multi-col {
+  /* 分成三列 */
+  column-count: 3;
+  /* 设置列宽 */
+  column-gap: 50px;
+  /* 设置分隔线 */
+  column-rule: 4px outset #ccc;
+}

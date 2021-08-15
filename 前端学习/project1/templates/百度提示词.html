@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../static/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../static/myAjax.js"></script>
+    <title>Document</title>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != "") {
+                var cookies = document.cookie.split(";");
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = $.trim(cookies[i])
+                    if (cookie.substring(0, name.length + 1) == name + "=") {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+                    }
+                }
+            }
+            return cookieValue
+        }
+        //使用原生JS实现跨域jsonp实现
+        $(function () {
+            $("#btn").click(function () {
+                var value = $("#keyWord").val()
+                var script = document.createElement("script");
+                script.type = "text/javascript"
+                script.src = "http://suggestion.baidu.com/su?wd=" + value
+                var head = document.querySelector("head")
+                head.appendChild(script)
+            })
+        })
+
+        //使用后端代理实现
+        $(function () {
+            $("#btn").click(function () {
+                var value = $("#keyWord").val()
+                $.ajax({
+                    url: "{% url 'app01:baidu_code' %}?keyWord=" + value + "&cb=window.baidu.sug2",
+                    type: "GET",
+                    dataType: 'jsonp'
+                })
+            })
+        })
+        window["baidu"] = {
+            sug: function (data) {
+                console.log(data)
+            },
+            sug2: function (data) {
+                $("#ul2 li").text(function (index) {
+                    return data.s[index]
+                })
+            },
+            sug3: function (data) {
+                $("#ul3 li").text(function (index) {
+                    return data.s[index]
+                })
+            }
+        }
+    </script>
+    <script>
+        var obj = {
+            url: "http://suggestion.baidu.com/su",
+            data: {
+                wd: "前端",
+            },
+            jsonp: "callback",
+            success: function (data) {
+                console.log(data)
+            }
+        }
+        myAjax3(obj)
+        var obj = {
+            type: 'Get',
+            url: "{% url 'app01:checkName' %}",
+            data: {
+                username: "111"
+            },
+            success: function (result) {
+                console.log(result)
+            }
+        }
+        myAjax2(obj)
+    </script>
+    <style>
+        form {
+            margin: 100px auto;
+            padding: 0;
+            width: 1000px;
+            text-align: center;
+            position: relative;
+            font-size: 0
+        }
+
+        .s_i {
+            display: inline-block;
+            margin: 0;
+            position: relative;
+            vertical-align: top
+        }
+
+        .i_p {
+            width: 500px;
+            height: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px 0 0 8px;
+            padding: 10px 0 10px 14px;
+            margin: 6px 0 0 7px;
+            background: transparent;
+            line-height: 30px;
+            font-size: 16px;
+        }
+
+        .b_i {
+            position: relative;
+            display: inline-block;
+            margin: 0;
+            vertical-align: top
+        }
+
+        .b_t {
+            background: #3385ff;
+            margin: 6px 0 0 0;
+            padding: 0;
+            width: 100px;
+            height: 40px;
+            border: 1px solid #3385ff;
+            border-radius: 0 8px 8px 0;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .ul2 {
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .ul3 {
+            font-size: 16px;
+            text-align: left;
+            list-style: none;
+            padding: 0 0 0 15px;
+            margin: 10px 0 10px 0
+        }
+
+        .ul3 li {
+            height: 28px;
+            line-height: 28px
+        }
+
+        .ul3 li:hover {
+            background-color: #eee;
+        }
+
+        .u_s {
+            border: 1px solid #ccc;
+            width: 515px;
+            position: relative;
+            margin: 0 auto;
+            left: -45px;
+            display: none;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        //直接使用jquery实现
+        $(function () {
+            $("#keyWord").focus(function () {
+                var value = $(this).val()
+                if (value) {
+                    $(".u_s").css({
+                        display: "block",
+                        position: "relative"
+                    })
+                }
+
+            }).keyup(function (e) {
+                var value = $(this).val()
+                if (value) {
+                    $.ajax({
+                        type: "GET",
+                        url: "http://suggestion.baidu.com/su",
+                        success: function (data) {
+                            $("#ul3 li").text(function (index) {
+                                return data.s[index]
+                            })
+                        },
+                        data: {
+                            wd: value
+                        },
+                        jsonp: "cb",
+                        dataType: "jsonp"
+                        // headers: {
+                        //     "x-csrftoken":getCookie("csrftoken")
+                        // }
+                    })
+                    $(".u_s").css({
+                        display: "block",
+                        position: "relative"
+                    })
+                }
+            }).blur(function () {
+                $(".u_s").css({
+                    display: "none"
+                })
+            })
+        })
+    </script>
+    <script>
+        var obj = {
+            url: "http://suggestion.baidu.com/su",
+            data: {
+                wd: "前端",
+            },
+            jsonp: "callback",
+            success: function (data) {
+                console.log(data)
+            },
+            dataType: "jsonp"
+        }
+        myAjax4(obj)
+
+    </script>
+</head>
+
+<body>
+    <form action="">
+        <span class="s_i">
+            <input type="text" class="i_p" name="" id="keyWord" placeholder="请输入关键词">
+
+        </span>
+        <span class="b_i"><input type="button" id="btn" class="b_t" value="查  询"></span>
+        <div class="u_s">
+            <ul id="ul3" class="ul3">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <ul id="ul2" class="ul2">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </form>
+</body>
+
+</html>

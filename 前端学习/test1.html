@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script text="text/JavaScript" src="jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .ghostButton {
+            background-color: #333;
+            width: 1000px;
+            height: 380px;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        .ghostButton .link {
+            float: left;
+            position: relative;
+            margin: 0 60px;
+            width: 205px;
+            height: 380px;
+        }
+
+        .ghostButton .link-miss .icon {
+            background-image: url("静态资源/游戏 .svg");
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .ghostButton .link-play .icon {
+            background-image: url("静态资源/火箭.svg");
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .ghostButton .link-touch .icon {
+            background-image: url("静态资源/地图.svg");
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .ghostButton .link .icon {
+            display: inline-block;
+            width: 100%;
+            height: 260px;
+            transition: 0.2s linear;
+            -webkit-transition: 0.2s linear;
+            -o-transition: 0.2s linear;
+            -moz-transition: 0.2s linear;
+        }
+
+        .ghostButton a {
+            text-decoration: none
+        }
+
+        .ghostButton .link .icon:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .ghostButton .link .button {
+            display: block;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+            color: #2dcb70;
+            font-size: 20px;
+            font-weight: bold;
+            box-sizing: border-box;
+            padding: 0 0 0 20px;
+            margin: auto;
+            background: url("静态资源/右.svg") no-repeat 130px;
+            transition: 0.2s ease;
+            -webkit-transition: 0.2s ease;
+            -o-transition: 0.2s ease;
+            -moz-transition: 0.2 ease;
+            position: relative
+        }
+
+        .ghostButton .link .button:hover {
+            background-position: 150px;
+            border-color: rgba(255, 255, 255, 1);
+        }
+
+        .ghostButton .link .button .line {
+            display: block;
+            position: absolute;
+            background: none;
+            transition: 0.4 ease;
+            -webkit-transition: 0.4s ease;
+            -o-transition: 0.4s ease;
+            -moz-transition: 0.4 ease;
+        }
+
+        .ghostButton .link .button .line-top {
+            width: 0;
+            height: 2px;
+            left: -100%;
+            top: -2px;
+        }
+
+        .ghostButton .link .button:hover .line-top {
+            width: 200px;
+            background-color: #fff;
+            position: absolute;
+            left: -2px;
+            top: -2px;
+        }
+
+        .ghostButton .link .button .line-left {
+            width: 2px;
+            height: 0;
+            left: -2%;
+            bottom: -100%;
+        }
+
+        .ghostButton .link .button:hover .line-left {
+            height: 50px;
+            background-color: #fff;
+            position: absolute;
+            left: -2px;
+            bottom: -2px;
+        }
+
+        .ghostButton .link .button .line-right {
+            width: 2px;
+            height: 0px;
+            right: -2px;
+            top: -100%;
+        }
+
+        .ghostButton .link .button:hover .line-right {
+            height: 50px;
+            background-color: #fff;
+            position: absolute;
+            right: -2px;
+            top: -2px;
+        }
+
+        .ghostButton .link .button .line-bottom {
+            width: 0px;
+            height: 2px;
+            right: -100%;
+            bottom: -2px;
+        }
+
+        .ghostButton .link .button:hover .line-bottom {
+            width: 200px;
+            background-color: #fff;
+            position: absolute;
+            right: -2px;
+            bottom: -2px;
+        }
+
+        .ghostButton .tooltip {
+            position: absolute;
+            padding: 0 15px;
+            height: 35px;
+            background-color: #2dcb70;
+            line-height: 35px;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            opacity: 0
+        }
+
+        .ghostButton .tooltip span {
+            border: 8px solid transparent;
+            border-top-color: #2dcb70;
+            display: block;
+            width: 0;
+            height: 0;
+            left: 50%;
+            position: absolute;
+            margin-left: -4px
+        }
+
+        .water {
+            position: relative;
+        }
+
+        .water .pin {
+            padding: 15px 0 0 15px;
+            float: left;
+        }
+
+        .water .pin .box {
+            padding: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 6px #ccc;
+            box-shadow: 5px;
+            width: 345px;
+        }
+
+        .water img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".ghostButton .button").hover(function () {
+                var textTitle = $(this).attr("data-text");
+                var leftLoc = $(this).offset().left;
+                var topLoc = $(this).offset().top;
+                $(".ghostButton .tooltip em").text(textTitle)
+                var addLeft = Math.floor(($(".ghostButton .tooltip").outerWidth() - $(this).outerWidth()) / 2);
+                $(".ghostButton .tooltip").css({
+                    left: leftLoc - addLeft,
+                    top: topLoc - 100
+                }).animate({
+                    opacity: 1,
+                    top: topLoc - 50
+                }, 500)
+            }, function () {
+                $(".ghostButton .tooltip").css({
+                    opacity: 0
+                })
+            })
+        })
+        $(function () {
+            $(window).on("load", function () {
+                imgLoc();
+                $(window).scroll(function () {
+                    if (getHeight()) {
+                        var pin = $("<div>").addClass("pin").appendTo(".water");
+                        var box = $("<div>").addClass("box").appendTo(pin);
+                        var img = $("<img>").attr("src", "静态资源/" + Math.floor(Math.random() * 9 + 1) + ".jpg").appendTo(box);
+                        imgLoc()
+                    }
+                })
+            })
+
+        })
+        function getHeight() {
+            var box = $(".water .pin")
+            var lastImgHeight = box.last().offset().top - Math.floor(box.last().height / 2)
+            var docHeight = $(document).height();
+            var scrollHeight = $(window).scrollTop();
+            return lastImgHeight < docHeight + scrollHeight ? false : true
+        }
+        function imgLoc() {
+            var box = $(".water .pin")
+            var boxHeight = box.eq(0).height();
+            var num = Math.floor($(window).width() / boxHeight)
+            var numArr = []
+            box.each(function (index, value) {
+                var boxHeight = box.eq(index).height()
+                if (index < num) {
+                    numArr[index] = boxHeight
+                } else {
+                    var minHeight = Math.min.apply(numArr, numArr);
+                    var minIndex = $.inArray(minHeight, numArr)
+                    $(value).css({
+                        left: box.eq(minIndex).offset().left,
+                        top: minHeight,
+                        position: "absolute"
+                    })
+                    numArr[minIndex] += $(value).height();
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="ghostButton">
+        <div class="link link-miss">
+            <span class="icon"></span>
+            <a href="#" class="button" data-text="My mission is clear">
+                MISSION
+                <span class="line line-top"></span>
+                <span class="line line-left"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+            </a>
+        </div>
+        <div class="link link-play">
+            <span class="icon"></span>
+            <a href="#" class="button" data-text="This is my playground">
+                PLAY
+                <span class="line line-top"></span>
+                <span class="line line-left"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+            </a>
+        </div>
+        <div class="link link-touch">
+            <span class="icon"></span>
+            <a href="#" class="button" data-text="Let do something together">
+                TOUCH
+                <span class="line line-top"></span>
+                <span class="line line-left"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+            </a>
+        </div>
+        <div class="tooltip">
+            <em>dfasgdasdfg</em>
+            <span></span>
+        </div>
+    </div>
+    <div class="water">
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/1.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/2.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/3.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/4.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/5.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/6.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/7.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/8.jpg" alt="">
+            </div>
+        </div>
+        <div class="pin">
+            <div class="box">
+                <img src="静态资源/9.jpg" alt="">
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

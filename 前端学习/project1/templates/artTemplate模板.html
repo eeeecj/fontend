@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../static/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../static/template-web.js"></script>
+    <script type="text/javascript" src="../../static/myAjax.js"></script>
+    <title>Document</title>
+    <script type="text/html" id="li_result">
+        {% verbatim %}
+        {{ if isTrue}}
+            {{each s value index}}
+            <li>{{value}}</li>
+            {{/each}}
+            <h2>总计有{{counts}}条数据</h2>
+            {{@ span}}
+
+        {{/if}}
+
+        {% endverbatim %}
+    </script>
+    <script>
+        $(function () {
+            $("input[type='button']").click(function () {
+                var value = $("input[type='text']").val()
+                var obj = {
+                    url: "http://suggestion.baidu.com/su",
+                    data: {
+                        wd: $("input[type='text']").val()
+                    },
+                    jsonp: "cb",
+                    success: function (data) {
+                        data.isTrue = true;
+                        data.counts = data.s.length
+                        data.span = "<h2><span style='color:green'>输出成功</span></h2>"
+                        var html = template("li_result", data)
+                        console.log(data)
+                        $("ul").append(html)
+                    },
+                    dataType: "jsonp"
+                }
+                myAjax4(obj)
+            })
+        })
+    </script>
+
+    <!-- -------------------------------------------------2------------------------------------------------- -->
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <form action="">
+        <input type="text">
+        <input type="button" value="提交">
+        <ul></ul>
+    </form>
+</body>
+
+</html>

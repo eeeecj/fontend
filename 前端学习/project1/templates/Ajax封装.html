@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../../static/jquery-3.6.0.min.js"></script>
+    <!-- 通过script标签实现跨域 -->
+    <script type="text/javascript" src="../../static/myAjax.js"></script>
+    <script>
+        //动态创建js资源
+        var script = document.createElement("script")
+        script.src = "../../static/test.js"
+        var head = document.querySelector("head")
+        var script_last=document.querySelector("head script:last-child")
+        console.log(script)
+        head.insertBefore(script,script_last)
+    </script>
+    <script>
+        $(function () {
+            $("input[name='username']").blur(function () {
+                var obj = {
+                    type: 'post',
+                    url: "{% url 'app01:checkName' %}",
+                    data: {
+                        username: $(this).val()
+                    },
+                    success: function (result) {
+                        $("#checkUser").text(result.message)
+                    }
+                }
+                myAjax2(obj)
+            })
+            // $("input[name='email']").blur(function () {
+            //     var obj = {
+            //         type:'post',
+            //         url: "{% url 'app01:checkEmail' %}",
+            //         data: {
+            //             username: $(this).val()
+            //         },
+            //         success: function (result) {
+            //             $("#checkEmail").text(result.message)
+            //         }
+            //     }
+            //     myAjax2(obj)
+            // })
+        })
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != "") {
+                var cookies = document.cookie.split(";");
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = $.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) == name + "=") {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        $(function () {
+            $("input[name='email']").blur(function () {
+                $.ajax({
+                    url: "{% url 'app01:checkEmail' %}",
+                    type: 'post',
+                    data: {
+                        email: $(this).val()
+                    },
+                    async: true,
+                    dataType: "json",
+                    success: function (result) {
+                        $("#checkEmail").text(result.message)
+                    },
+                    headers: {
+                        "x-csrftoken": getCookie("csrftoken")
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form action="{% url 'app01:login' %}" method="post">
+        {% csrf_token %}
+        <label for="">用户名</label>
+        <input type="text" name="username">
+        <span id="checkUser"></span>
+        <br>
+        <label for="">密码</label>
+        <input type="password" name="password">
+        <span id="checkPsd"></span>
+        <br>
+        <label for="">邮箱</label>
+        <input type="email" name="email">
+        <span id="checkEmail"></span>
+        <input type="submit" value="提交">
+    </form>
+</body>
+
+</html>

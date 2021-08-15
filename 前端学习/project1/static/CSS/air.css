@@ -1,0 +1,65 @@
+*{
+  padding:0;
+  margin:0
+}
+.container {
+  width: 1000px;
+  margin: 200px auto;
+  background: #c2d1e1;
+  position: relative;
+}
+.container form {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+}
+.container form select {
+  height: 30px;
+  width: 500px;
+  vertical-align: middle;
+  font-size: 16px;
+
+}
+.container form button {
+  height: 30px;
+  width: 80px;
+  background-color: #1fd93e;
+  border: 1px solid #3fd93e;
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 18px;
+}
+.container .ulcontainer {
+  display: inline-block;
+  margin: 10px auto;
+  width: 800px;
+  text-align:left;
+}
+.container .ulcontainer p{
+  font-size:12px;
+  background-color:#e1e29e;
+  padding:10px;
+}
+.container .ulcontainer div{
+  width: 50%;
+  float:left;
+}
+.container .ulcontainer strong{
+  float: left;
+  width: 100%;
+}
+.container .ulcontainer ul{
+  list-style: none;
+  width:400px;
+  display: block;
+  float: left;
+}
+.container .ulcontainer li{
+  display: block;
+  height:30px;
+  line-height:30px;
+}

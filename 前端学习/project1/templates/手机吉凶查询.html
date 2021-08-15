@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../static/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                data: {
+                    url:"http://api.tianapi.com/txapi/mobilelocal/index",
+                    key: "f3eed32afbb824cd287a903a93897266",
+                    phone: "1522150"
+                },
+                url: "{% url 'app01:phoneGet'%}",
+                type: "GET",
+                success: function (data) {
+                    //使用Json.parse格式化数据为对象
+                    var data=JSON.parse(data)
+                }
+            })
+        })
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>

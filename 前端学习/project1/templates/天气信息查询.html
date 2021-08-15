@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../static/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../../static/template-web.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/CSS/air.css">
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btn").click(function () {
+                setTimeout(function () {
+                    var city = $("#city").val()
+                    $.ajax({
+                        data: {
+                            code: city,
+                            app: "tq360"
+                        },
+                        url: "http://tq.360.cn/api/weatherquery/querys",
+                        dataType: "jsonp",
+                        jsonpCallback: "callback",
+                        success: function (data) {
+                            var html = template("resultShow", data)
+                            $("#result").html(html)
+                            console.log(data)
+                        }
+                    })
+                })
+            })
+        })
+    </script>
+    <script type="text/html" id="resultShow">
+            {% verbatim %}
+        <p>{{alert[0].content}}</p>
+        <strong> 时间：{{realtime.date}} {{realtime.time}}</strong>
+        <ul>
+        <li>天气：{{realtime.weather.info}}</li>
+        <li>温度: {{realtime.weather.temperature}}</li>
+        <li>湿度：{{realtime.weather.humidity}}</li>
+        </ul>
+        <ul>
+        <li>风力：{{realtime.wind.power}}</li>
+        <li>风向: {{realtime.wind.direct}}</li>
+        <li>风速: {{realtime.wind.windspeed}}</li>
+        </ul>
+        {{each weather value index}}
+        <strong> 日期：{{value.date}}</strong>
+        <div>
+            <strong>白天</strong>
+            <ul>
+                <li>天气：{{value.info.day[1]}}</li>
+                <li>温度：{{value.info.day[2]}}</li>
+                <li>风向：{{value.info.day[3]}}</li>
+                <li>风级：{{value.info.day[4]}}</li>
+            </ul>
+        </div>
+        <div>
+            <strong>夜间</strong>
+            <ul>
+                <li>天气：{{value.info.night[1]}}</li>
+                <li>温度：{{value.info.night[2]}}</li>
+                <li>风向：{{value.info.night[3]}}</li>
+                <li>风级：{{value.info.night[4]}}</li>
+            </ul>
+        </div>
+
+        {{/each}}
+            {% endverbatim %}
+            </script>
+</head>
+
+<body>
+    <div class="container">
+        <form action="">
+            <select name="city" id="city">
+                <option value="101010100">北京</option>
+                <option value="101020100">上海</option>
+                <option value="101280101">广州</option>
+                <option value="101270801">广安</option>
+            </select>
+            <button id="btn" type="button">查 &nbsp; 询</button>
+            <div class="ulcontainer" id="result">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

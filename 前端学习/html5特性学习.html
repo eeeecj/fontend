@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html5特性学习</title>
+    <link rel="stylesheet" href="html5新特性.css">
+    <script>
+        // 拖放
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        // 放置
+        function drag(ev) {
+            ev.dataTransfer.setData('text', ev.target.id);
+        }
+        // 拖动
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData('text');
+            ev.target.appendChild(document.getElementById(data))
+        }
+    </script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script>
+        // 获取当前地理位置
+        function init() {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var coords = position.coords;
+                // 设定地图参数，将经纬度设为地图中心点
+                var latlng = new google.maps.LatLng(coords.latitude, coords.altitude)
+                var myOptions = {
+                    zoom: 14,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                //创建地图并“map”div中显示
+                var map1 = new google.maps.Map(document.getElementById("map"), myOptions);
+                //创建标记
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map1
+                })
+                //创建标准窗口,并指定该窗口的注释文字
+                var infowindow = new google.maps.InfoWindow({
+                    content: "当前位置"
+                });
+                infowindow.open(map1, marker);
+            })
+        }
+    </script>
+    <script>
+        var ta;
+        var btn;
+        window.onload = function () {
+            ta = document.getElementById('ta');
+            btn = document.getElementById('btn');
+            if (localStorage.text) {
+                ta.value = localStorage.text;
+            }
+            btn.onclick = function () {
+                localStorage.text = ta.value;
+            }
+        }
+    </script>
+    <script>
+        var num;
+        var txt;
+        var btn;
+        window.onload = function () {
+            txt = document.getElementById('txt');
+            btn = document.getElementById("add_btn");
+            if (sessionStorage.num) {
+                num = sessionStorage.num;
+            } else {
+                num = 0;
+            }
+            btn.onclick = function () {
+                num++;
+                sessionStorage.num = num;
+                showNum();
+            }
+            function showNum() {
+                txt.innerHTML = sessionStorage.num;
+            }
+            showNum();
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="audio">
+        <ul>
+            <li>audio 播放音频</li>
+            <li>control 添加播放、暂停、声音等控件</li>
+        </ul>
+        <audio controls="controls">
+            <!-- 该方法适用于多个播放渠道 -->
+            <source
+                src="http://m10.music.126.net/20210630200004/de12abd2711248d738e8c07a829ebabf/ymusic/0558/515d/535f/22e3367294f7347de3b5d54808c87b75.mp3">
+            浏览器不支持
+        </audio>
+    </div>
+
+    <div class="Video">
+        <ul>
+            <li>html5视频播放标准</li>
+            <li>可添加controls控件</li>
+        </ul>
+        <video controls="controls" width='100%'>
+            <!-- 该方法支持多个播放渠道 -->
+            <source src="静态资源/夜晚城市下雨的街道上公交车开过_爱给网_aigei_com.mp4">
+            浏览器不支持
+        </video>
+    </div>
+
+    <div class="drag">
+        <p>请拖动图片</p>
+        <div id="div1" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+        <img id="drag1" src="../项目/1.png" alt="" draggable="true" width="300px" height="300px"
+            ondragstart="drag(event)">
+    </div>
+
+    <div class="canvas">
+        <canvas width="400px" height="400px" id="canvas1"
+            style="border: 1px solid #ccc; background-color: #eee;"></canvas>
+    </div>
+
+    <div class="SVG">
+        <svg viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="6" cy="6" r="5"></circle>
+        </svg>
+        <iframe src="静态资源/svg.svg" frameborder="0" width="500px" height="500px"></iframe>
+    </div>
+
+    <div class="Geo">
+        <div id="map"></div>
+    </div>
+
+    <div class="web_storage">
+        <ul>
+            <li>localStorage:没有时间限制的数据存储</li>
+            <li>sessionStorage:针对一个Session的数据存储,关闭当前浏览器删除</li>
+        </ul>
+        <textarea cols="30" rows="10" id="ta"></textarea>
+        <button id="btn">save</button>
+        <span id="txt">0</span>
+        <button id="add_btn">add</button>
+    </div>
+
+    <div class="css_new">
+        <div class="div1"> 圆角效果</div>
+        <div class="div2">阴影效果</div>
+    </div>
+
+    <div class="css_bg">
+        <p>上面是缩小的图片</p>
+        <p>原始图片: <img src="../项目/1.png" alt=""></p>
+    </div>
+
+    <div class="css_text">
+        <h2>我是标题</h2>
+        <p>sbnldaisHSFILODHABFPO;DHBFIODP;AHBFDAP;SHFDIO/;OAuhejiowhrfiufgbeuid;hagbfdsiufhbhn</p>
+        <p>加载字体,在style中设置：
+            @font-face{
+            //逐一引入，直到字体存在。
+            font-family:myfamily;
+            src:url();
+            src:url();
+            }
+            div{
+            font-family:myfamily
+            }
+        </p>
+    </div>
+
+    <div class="trans">
+        对元素移动(translate)、缩放(scale)、转动(rotate)、拉伸(skew)、拉长(matrix)
+        <div id="trans_div">Hello would</div>
+    </div>
+
+    <div class="trans_3D">
+        welcome home
+    </div>
+
+    <div class="trans_tion">
+        过渡
+        transition
+    </div>
+
+    <div class="animate">
+        必须规定动画名称与动画时长
+    </div>
+
+    <div class="multi-col">
+        多列金山哦分好的哈更好地发挥工会那地方考核阿尔ops【u让姐姐发；as/j嗲家佛加大可偶尔安徽覅偶觉得那份看了觉得很难
+        多列金山哦分好的哈更好地发挥工会那地方考核阿尔ops【u让姐姐发；as/j嗲家佛加大可偶尔安徽覅偶觉得那份看了觉得很难
+        多列金山哦分好的哈更好地发挥工会那地方考核阿尔ops【u让姐姐发；as/j嗲家佛加大可偶尔安徽覅偶觉得那份看了觉得很难
+        多列金山哦分好的哈更好地发挥工会那地方考核阿尔ops【u让姐姐发；as/j嗲家佛加大可偶尔安徽覅偶觉得那份看了觉得很难
+        多列金山哦分好的哈更好地发挥工会那地方考核阿尔ops【u让姐姐发；as/j嗲家佛加大可偶尔安徽覅偶觉得那份看了觉得很难
+        多列金山哦分好的哈更好地发挥工会那地方考核阿尔ops【u让姐姐发；as/j嗲家佛加大可偶尔安徽覅偶觉得那份看了觉得很难
+    </div>
+
+</body>
+<script>
+    // 应放在canvas后执行
+    var c = document.getElementById("canvas1");
+    var cxt = c.getContext('2d');
+    // 制定画笔颜色
+    cxt.fillStyle = "#f00";
+    cxt.fillRect(0, 0, 100, 100);
+    cxt.beginPath();
+    cxt.arc(100, 200, 20, 0, Math.PI * 2, true);
+    cxt.closePath();
+    cxt.fill();
+    var img = new Image();
+    img.onload = function () {
+        cxt.drawImage(img, 300, 300);
+    };
+    img.src = "1.png";
+</script>
+
+</html>

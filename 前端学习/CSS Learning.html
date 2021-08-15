@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<hr>
+
+<body>
+    <div class="box">
+        <h2>新闻列表</h2>
+        <ul>
+            <li><a href="#">分成四个部分，每个人选一部分做吧:</a></li>
+            <li><a href="#">1.新闻事例+内卷的含义</a></li>
+            <li><a href="#">2.内卷的原因</a></li>
+            <li><a href="#">3.避免内卷的意义</a></li>
+            <li><a href="#">4.如何面对内卷</a></li>
+        </ul>
+    </div>
+    <hr>
+    <div class="article_stream">
+        <h2>文档流</h2>
+        <dl>
+            <dt>空白折叠</dt>
+            <dd>将文字与图片写在同一行中（紧密）可避免文字与图片中出现空隙</dd>
+            hello <img src="1.png" alt=""><br>
+            hello<img src="1.png" alt="">
+        </dl>
+    </div>
+    <hr>
+    <div class="flaot">
+        <h2>让多个元素排在同一行，并设置宽高</h2>
+        <ol>
+            <li>脱离文档流，浮动元素不占用空间 </li>
+            <li>浮动元素比普通元素的层级高，会把普通元素给盖住</li>
+            <li>浮动元素会遇到父元素边框以及上一个浮动元素即停止浮动</li>
+            <li>浮动元素的父元素不会再包裹浮动元素</li>
+            <li>行内元素浮动后，这个行内元素就变成块级元素（span）</li>
+        </ol>
+        <div class="div_box">
+            <div class="div1"></div>
+            <div class="div2"></div>
+            <div class="div3"></div>
+        </div>
+    </div>
+    <hr>
+    <div class="float_box">
+        <ul>
+            <li><a href="#">网页导航</a></li>
+            <li><a href="#">网页导航</a></li>
+            <li><a href="#">网页导航</a></li>
+            <li><a href="#">网页导航</a></li>
+            <li><a href="#">网页导航</a></li>
+        </ul>
+    </div>
+    <hr>
+    <div class="clear_float">
+        <p>清除浮动，可避免浮动元素对下面元素的排版布局，浮动元素的父元素会将浮动元素从视觉上进行包裹。</p>
+        <div class="box">
+            <div class="div1"></div>
+            <div class="div2"></div>
+            <div class="div3"></div>
+            <div style="clear:both"></div>
+        </div>
+        <h2>清除浮动</h2>
+        <ul>
+            <li>给浮动元素父元素设置固定高</li>
+            <li>使用清除浮动属性 clear(一般在最后一个浮动元素后面新建空白div，用于清除浮动)</li>
+            <li>使用overflow:hidden属性清除(隐藏溢出部分隐藏)</li>
+        </ul>
+    </div>
+    <div class="margin">
+        <ul>
+            <li>在标准文档流中，竖直方向的margin不会叠加，它会取最大值</li>
+            <li>横轴方向margin没有塌陷现象</li>
+            <li>浮动元素没有塌陷现象</li>
+        </ul>
+        <ul>
+            <li>使用margin实现水平居中时，需要给盒子设置一个固定宽度，且只有块元素能够实现水平居中，行内元素无法实现水平居中</li>
+            <li>只有标准文档流的元素才能实现Margin居中（浮动元素无法实现）</li>
+            <li>margin是用来实现盒子居中，而不是文本居中（text-align）</li>
+        </ul>
+        <h4>尽量不使用子元素的margin，使用父元素的padding</h4>
+        margin一般用于描述兄弟元素的关系，而不是父子元素的关系
+    </div>
+    <div class="dispaly_">
+        <ul>
+            <li>
+                <span class="display_block">用于行内元素与块级元素的相互转换（将dispaly属性的值设置为block，则转换为块级元素;设置为inline，则转换为行内元素。）</span>
+            </li>
+            <li>
+                将一个显示的元素隐藏，将一个隐藏的元素显示（display:none 将元素隐藏；display：block 将元素显示出来）
+            </li>
+        </ul>
+    </div>
+    <div class="pos">
+        <div class="fix_pos">
+            <h3>固定定位</h3>
+            <ul>
+                <li>固定定位脱离标准文档流</li>
+                <li>固定定位元素比标准文档流的元素层级更高</li>
+                <li>固定定位元素不再占用空间</li>
+                <li>固定定位是相对于窗口的位置，不随滚动改变</li>
+                <li>使用left、top、right、bottom设置位置</li>
+            </ul>
+            <h3>导航栏</h3>
+            <div class="nav_box">
+                <div class="nav">
+                    <ul>
+                        <li><a href="#">Bootstrap中文网</a></li>
+                        <li><a href="#">Bootstrap中文网</a></li>
+                        <li><a href="#">Bootstrap中文网</a></li>
+                        <li><a href="#">Bootstrap中文网</a></li>
+                        <li class="about"><a href="#">关于</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h3>使用固定定位实现返回顶部按钮</h3>
+            <a href="#" class="top">返回顶部</a>
+            <div class="div1"></div>
+            <div class="div2"></div>
+        </div>
+        <div class="relative_pos">
+            <h3>相对定位</h3>
+            <ul>
+                <li>相对定位没有脱离标准文档流</li>
+                <li>相对定位元素若没有设置定位坐标，那么相对定位元素还在原来位置</li>
+                <li>相对定位设置坐标后，会在原来位置留下空白区域</li>
+                <li>相对于定位元素覆盖标准文档流内容</li>
+                <li>相对定位坐标值可以是负值</li>
+                相对定位一般配合”绝对定位“元素来使用"子绝父相"
+            </ul>
+        </div>
+        <div class="absolute_pos">
+            <h3>绝对定位</h3>
+            <ul>
+                <li>绝对定位元素脱离标准文档流</li>
+                <li>绝对定位会压盖标准文档流的元素</li>
+                <li>绝对定位会查找最近的设置定位的父元素，否则相对于浏览器定位。</li>
+            </ul>
+            <div class="div_box">
+                <span><img src="1.png" alt=""></span>
+                <img src="../项目/1.png" alt="" class="img_show">
+            </div>
+        </div>
+    </div>
+    <div class="zindex">
+        <h3>z-index</h3>
+        <ul>
+            <li>z-index决定谁压盖着谁，数值大的压盖数值小的</li>
+            <li>只有设置了定位才会有z-index值</li>
+            <li>z-index无单位，为正整数，默认为0</li>
+            <li>若多个元素未设置z-index，则写在html后面的元素压盖写在前面的元素</li>
+        </ul>
+    </div>
+    <div class="class_fade">
+        <ul>
+            <li>E:first-child匹配第一个孩子</li>
+            <li>E:last-child匹配最后一个孩子</li>
+            <li>E:nth-child(n)匹配第n个孩子</li>
+            <li>E:nth-child(2n)、E:nth-child(even)匹配偶数个孩子</li>
+            <li>E:nth-child(2n+1)、E:nth-child(odd)匹配奇数个孩子</li>
+            <li>E:only-child匹配有且仅有一个孩子</li>
+        </ul>
+    </div>
+    <div class="boder-collapses">
+        合并表格边框线，boder-collapse:collapse;即可实现
+        <table width="600px" border='1' bodercolor='#ccc'>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </div>
+    <div class="element-fade">
+        <ul>
+            <li>:first-letter 操作当前元素的第一个字</li>
+            <li>:first-line 操作当前元素的第一行文字</li>
+            <li>::befor 当前盒子的最前面插入（将文字放在content中）</li>
+            <li>::after 当前盒子最后面插入（将文字放在content中）</li>
+        </ul>
+    </div>
+    <div class="text-shadows">
+        <h3>文本阴影</h3>
+        text-shadow:h-shadow(水平阴影，允许负值，必需。) v-shadow(垂直阴影，允许负值，必需。) blur（模糊距离，可选） color（阴影颜色，可选）
+    </div>
+    <div class="box-shadow">
+        <h3>盒子阴影</h3>
+        box-shadow:h-shadow(水平阴影，允许负值，必需。) v-shadow(垂直阴影，允许负值，必需。) blur（模糊距离，可选）spread(阴影尺寸，可选)
+        color（阴影颜色，可选）insert（将外部阴影改为内部阴影，可选）
+    </div>
+    <div class="cir-retangle">
+        <h3>boder-radius</h3>
+        boder-radius:左上 右上 右下 左下
+        <div class="radius_box"></div>
+        <div class="radius_ex">
+            <a href="#">更多></a>
+        </div>
+    </div>
+    <div class="transparent">
+        颜色值设置为rgba(红色，绿色，蓝色，透明度)透明度取值0-1，0表示完全透明，1表示不透明。
+        <ul>
+            <li>背景颜色透明：background-color:rgba(255,255,255,0.3)</li>
+            <li>文本颜色透明：color：rgba(255,255,255,0.3)</li>
+            <li>边框颜色透明: border:1px solid rgba(255,255,255,0.3)</li>
+        </ul>
+        <div class="trans_ex">
+            <p>soadhjasiophfdafhd;oahbfd;hfbad;hfd'jfsaop'fjdopfjas</p>
+            <div class="box"></div>
+        </div>
+    </div>
+</body>
+
+</html>

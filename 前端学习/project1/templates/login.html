@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../../static/jquery-3.6.0.min.js"></script>
+    <title>Document</title>
+    <script>
+        function test() {
+            $(function () {
+                var btn = $("#btn")
+                btn.click(function () {
+                    var username = $("input[name='username']").val();
+                    console.log(username)
+                    //使用js访问login
+                    // 创建XMLHttpRequest对象
+                    // 设置浏览器兼容
+                    if (window.XMLHttpRequest) {
+                        var xhr = new XMLHttpRequest();//创建发送实例
+                    } else {
+                        //IE6 浏览器
+                        var xhr = new ActiveXObject("Microsoft");
+                    }
+                    // 准备发送 
+                    // xhr.open("GET","{% url 'app01:checkName' %}"+"?username="+username,true) //get方法请求
+                    // xhr.send(null);
+                    // xhr.onreadystatechange=function(){
+                    //     var text=xhr.responseText;
+                    //     $("span").text(text)
+                    // }
+
+                    xhr.open('POST', "{% url 'app01:checkName' %}", true)// post 方法请求
+                    var params = "username=" + username//参数放在请求体中
+                    // 设置请求头
+                    xhr.setRequestHeader(
+                        "X-CSRFToken", getCookie("csrftoken")
+                    )
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                    xhr.send(params);//发送 post
+                    //回调函数
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var text = xhr.responseText; //获取数据 xhr.responseXML
+                            text = JSON.parse(text)
+                            $("span").text(text.message) //局部刷新
+                        }
+                    }
+                })
+            })
+
+        }
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != "") {
+                var cookies = document.cookie.split(";")
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = $.trim(cookies[i])
+                    if (cookie.substring(0, name.length + 1) == (name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+                        break;
+                    }
+                }
+            }
+            return cookieValue
+        }
+
+
+        $(function () {
+            //用户验证
+            $("input[name='username']").blur(function () {
+                var username = $(this).val()
+                if (window.XMLHttpRequest) {
+                    var xhr = new XMLHttpRequest()
+                } else {
+                    var xhr = new ActiveXObject("Microsoft");
+                }
+                xhr.open('GET', "{% url 'app01:checkName' %}?username=" + username, true)
+                xhr.send()
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var text = xhr.responseText
+                        text = JSON.parse(text)
+                        $('#checkUser').text(text.message)
+                    }
+                }
+            })
+            //邮箱验证
+            $("input[name='email']").blur(function () {
+                var email = $(this).val()
+                if (window.XMLHttpRequest) {
+                    var xhr = new XMLHttpRequest()
+                } else {
+                    var xhr = new ActiveXObject("Microsoft")
+                }
+                xhr.open("POST", "{% url 'app01:checkEmail' %}", true)
+                var params = "email=" + email
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.setRequestHeader("x-csrftoken", getCookie("csrftoken"))
+                xhr.send(params)
+                xhr.onreadystatechange = function () {
+                    if ((xhr.readyState == 4) && (xhr.status == 200)) {
+                        var text = xhr.responseText
+                        text = JSON.parse(text)
+                        $("#checkEmail").text(text.message)
+                    }
+                }
+            })
+        })
+    </script>
+    <style>
+        form label {
+            display: inline-block;
+            width: 50px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <form action="{% url 'app01:login' %}" method="post">
+        {% csrf_token %}
+        <label for="">用户名</label>
+        <input type="text" name="username">
+        <span id="checkUser"></span>
+        <br>
+        <label for="">密码</label>
+        <input type="password" name="password">
+        <span id="checkPsd"></span>
+        <br>
+        <label for="">邮箱</label>
+        <input type="email" name="email">
+        <span id="checkEmail"></span>
+        <input type="submit" value="提交">
+    </form>
+</body>
+
+</html>
