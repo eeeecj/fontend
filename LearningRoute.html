@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.2/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <style>
+        body {
+            width: 100%;
+            height: 800px;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: '#5470c6'
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container"></div>
+</body>
+<script>
+    var colors = ['#FF6666', '#CCFFFF', '#FFCCCC', '#99CCCC', '#3399CC', '#CCFFCC', '#99CCCC', '#99CC33', '#666699']
+
+    var chartDom = document.getElementById('container');
+    var myChart = echarts.init(chartDom);
+    var option;
+    var SetItemColor = function (data, color) {
+        data.itemStyle = { color: color }
+        if (data && data.children) {
+            data.children.forEach(function (datum, index) {
+                SetItemColor(datum, color)
+            })
+        }
+    }
+    var data = {
+        name: "学习路径",
+        children: [
+            {
+                name: "论文",
+                children: [{
+                    name: "长距离干道混合车流路径分割与绿波协调同步优化"
+                },
+                {
+                    name: "长距离干道小汽车和公交车差异化分段信号协调控制",
+                }, {
+                    name: "多路径的长干道绿波分段协调控制"
+                }
+                ]
+            }, {
+                name: "项目",
+                children: [
+                    {
+                        name: "东风路交通疏解",
+                        children: [{
+                            name: "负责农林下路至梅东路段交通疏解与影响评估",
+                            value: 202104
+                        }, {
+                            name: "负责西场段交通影响评估",
+                            value: 202103
+
+                        }]
+                    }, {
+                        name: "广湛铁路施工交通疏解：中山八立交",
+                        children: [
+                            {
+                                name: "负责交通影响评估",
+                                value: 202105
+                            }
+                        ]
+                    },
+                    {
+                        name: "关于佛山市普通干线公路网交通流仿真建模项目可行性研究",
+                        children: [
+                            {
+                                name: "负责框架细则与报告总体内容撰写与修改",
+                                value: 202107
+                            }
+                        ]
+                    }, {
+                        name: "石景山仿真",
+                        children: [
+                            {
+                                name: "杨庄路",
+                                children: [{
+                                    name: "路网流量统计",
+                                    value: 202103
+                                }, {
+                                    name: "流量方案生成",
+                                    value: 202104
+                                }, {
+                                    name: '信号配时与调整',
+                                    value: 202104
+                                }, {
+                                    name: "干道协调",
+                                    value: 202106
+                                }, {
+                                    name: "MULTIBAND与MAXBAND模型生成",
+                                    value: 202108
+                                }]
+                            }
+                        ]
+                    }, {
+                        name: "冬奥会平台",
+                        children: [{
+                            name: "利用bootstrap、VUE生成交通紧急疏散网页基本框架"
+                        }]
+                    }, {
+                        name: "顺德区智慧交通近期及中远期智慧系统发展规划",
+                        children: [
+                            {
+                                name: "交通应急平台建设",
+                                value: 202008
+                            }, {
+                                name: "后期报告修改",
+                                value: 202010
+                            }
+                        ]
+                    }, {
+                        name: "深中通道影响分析",
+                        value: 202011
+                    }, {
+                        name: "中山交通拥堵治理方案标书撰写",
+                        value: 202011
+                    }
+                ]
+            }, {
+                name: "前端学习",
+                children: [
+                    {
+                        name: "html5"
+                    },
+                    {
+                        name: "css"
+                    }, {
+                        name: "javascript"
+                    }, {
+                        name: "Vue"
+                    }, {
+                        name: "Jquery"
+                    }
+                ]
+            }, {
+                name: "python学习",
+                children: [{
+                    name: "docplex"
+                }, {
+                    name: "flask"
+                }, {
+                    name: "django"
+                }]
+            }, {
+                name: "机器学习",
+                children: [
+                    {
+                        name: "感知机"
+                    }, {
+                        name: "前向传播"
+                    }, {
+                        name: "后向传播"
+                    }, {
+                        name: "计算图"
+                    }
+                ]
+            }
+        ]
+    }
+    myChart.hideLoading();
+    data.children.forEach(function (datum, index) {
+        index % 2 === 0 && (datum.collapsed = true);
+        var color = colors[index]
+        SetItemColor(datum, color)
+    });
+    console.log(data)
+    myChart.setOption(option = {
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        series: [
+            {
+                type: 'tree',
+
+                data: [data],
+
+                top: '1%',
+                left: '7%',
+                bottom: '1%',
+                right: '20%',
+
+                symbolSize: 7,
+
+                label: {
+                    position: 'left',
+                    verticalAlign: 'middle',
+                    align: 'right',
+                    fontSize: 12
+                },
+
+                leaves: {
+                    label: {
+                        position: 'right',
+                        verticalAlign: 'middle',
+                        align: 'left'
+                    }
+                },
+
+                emphasis: {
+                    focus: 'descendant'
+                },
+
+                expandAndCollapse: true,
+                animationDuration: 550,
+                animationDurationUpdate: 750
+            }
+        ]
+    });
+
+    option && myChart.setOption(option);
+
+</script>
+
+</html>
