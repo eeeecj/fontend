@@ -69,6 +69,8 @@ function difHtml() {
             if (err) {
               throw err;
             } else {
+              res.statusCode = 404;
+              res.statusMessage = "Not Found";
               res.end(data);
             }
           }

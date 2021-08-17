@@ -231,6 +231,46 @@ Transfer-Encoding: chunked
 
 可通过 Response 对象修改值
 
-## 
+# 实例测试
 
 <p style="background-color:#ffb; padding:10px">注意：url仅仅为一标识符，跟文件类型无关，‘/index.html’未必表示返回一个html页面</p>
+
+# [Request](http://nodejs.cn/api/http.html#http_class_http_clientrequest)[1](http://nodejs.cn/api/http.html#http_http_request_options_callback)
+
+`request`：服务器解析用户提交的 http 请求报文，将结果解析到`request`对象中.凡是要获取和用户请求相关的数据都可以通过`request`对象获取。
+
+- request.method 请求的方法
+- request.host 请求的方法
+- message.headers 标头名称和值的键值对。
+- message.rawHeaders 键和值在同一个列表中。
+- message.httpVersion 在服务器请求的情况下，客户端发送的 HTTP 版本。 在客户端响应的情况下，连接到服务器的 HTTP 版本。
+- message.url 请求的网址字符串。 这仅包含实际 HTTP 请求中存在的网址。
+
+# [Response](http://nodejs.cn/api/http.html#http_class_http_serverresponse)
+
+`response`：服务器端用来向用户做出响应的都西昂。凡是需要向用户响应的操作，都可以通过`response`对象操作。
+
+- outgoingMessage.write(chunk[, encoding][, callback]) chunk 可以是字符串或缓冲区。 当 chunk 为字符串时，则 encoding 参数指定如何将 chunk 编码为字节流。 callback 将在 chunk 被刷新时被调用。
+- response.end([data[, encoding]][, callback]) 此方法向服务器发出信号，表明所有响应头和正文都已发送；该服务器应认为此消息已完成。 response.end() 方法必须在每个响应上调用。
+
+  如果指定了 data，则其效果类似于调用 response.write(data, encoding) 后跟 response.end(callback)。
+- response.writeHead(statusCode[, statusMessage][, headers]) 向请求发送响应头。 状态码是 3 位的 HTTP 状态码，如 404。 最后一个参数 headers 是响应头。 可选地给定人类可读的 statusMessage 作为第二个参数。
+
+```JS
+const body = 'hello world';
+response
+  .writeHead(200, {
+    'Content-Length': Buffer.byteLength(body),
+    'Content-Type': 'text/plain'
+  })
+  .end(body);
+```
+
+当标头已使用 response.setHeader() 设置时，则它们将与任何传给 response.writeHead() 的标头合并，其中传给 response.writeHead() 的标头优先。
+
+- response.statusCode 使用隐式标头（不显式调用 response.writeHead()）时，此属性控制在标头刷新时将发送到客户端的状态码。
+- response.statusMessage 当使用隐式标头（不显式调用 response.writeHead()）时，此属性控制在标头刷新时将发送到客户端的状态消息。 如果保留为 undefined，则将使用状态码的标准消息。
+
+
+# [package.json](https://www.npmjs.cn/files/package.json/)
+项目描述文件
